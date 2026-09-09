@@ -1289,7 +1289,7 @@
                     <i class="fa-solid fa-gavel"></i>
                 </div>
                 <div>
-                    <span class="event-badge">FANSAT 2025 • OFFICIAL PORTAL</span>
+                    <span class="event-badge">KHAYAL 2026 • JUDGEMENT PORTAL</span>
                     <h1 class="app-title">Judge Duty Schedule</h1>
                     <p class="app-subtitle">Search, view, and export personalized judging programs & time slots</p>
                 </div>
@@ -1437,7 +1437,7 @@
 
     <script>
         /**
-         * FANSAT Official Judge Duty Schedule Application
+         * KHAYAL 2026 Official Judge Duty Schedule Application
          * Real-time Google Sheet GViz Integration with Offline Fallback & Multi-View Rendering
          */
 
@@ -2004,7 +2004,7 @@
                     <div class="sheet-inner-border">
                         <div>
                             <div class="sheet-header">
-                                <div class="sheet-header-title">FANSAT 2025</div>
+                                <div class="sheet-header-title">KHAYAL 2026</div>
                                 <div class="sheet-header-sub">OFFICIAL JUDGING DUTY SCHEDULE & ASSIGNMENTS</div>
                             </div>
 
@@ -2135,7 +2135,7 @@
             currentThemeIndex = (currentThemeIndex + 1) % THEMES.length;
             const newTheme = THEMES[currentThemeIndex];
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('fansat_theme', newTheme);
+            localStorage.setItem('khayal_theme', newTheme);
             
             const themeLabel = document.getElementById('themeLabel');
             themeLabel.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
@@ -2241,7 +2241,7 @@
         });
 
         // Initialize Theme from Local Storage
-        const savedTheme = localStorage.getItem('fansat_theme') || 'light';
+        const savedTheme = localStorage.getItem('khayal_theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         currentThemeIndex = THEMES.indexOf(savedTheme);
         if (currentThemeIndex === -1) currentThemeIndex = 0;
