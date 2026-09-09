@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Duty Schedule • Arts & Literary Fest</title>
+    <meta name="description" content="Official Interactive Judge Duty Schedule with instant search, judge filtering, and printable sheets.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Vibrant Modern Palette */
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            
+            --accent-teal: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-violet: #8b5cf6;
+            --accent-cyan: #0ea5e9;
+
+            /* Base Light Theme */
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-surface-alt: #f1f5f9;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --border-color: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            
+            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --card-shadow-hover: 0 20px 30px -10px rgba(99, 102, 241, 0.18), 0 10px 15px -5px rgba(15, 23, 42, 0.08);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dark Theme Variables */
+        [data-theme="dark"] {
+            --bg-body: #090d16;
+            --bg-surface: #111827;
+            --bg-surface-alt: #1f2937;
+            --bg-glass: rgba(17, 24, 39, 0.88);
+            --border-color: #2e384d;
+            --border-hover: #4b5563;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-light: #64748b;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+            --card-shadow-hover: 0 20px 30px -10px rgba(129, 140, 248, 0.25), 0 10px 15px -5px rgba(0, 0, 0, 0.5);
+            --header-gradient: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+        }
+
+        /* High Contrast Festive Theme */
+        [data-theme="festive"] {
+            --primary: #ec4899;
+            --primary-dark: #be185d;
+            --primary-light: #f472b6;
+            --primary-gradient: linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #8b5cf6 100%);
+            --header-gradient: linear-gradient(135deg, #180018 0%, #3b0764 50%, #831843 100%);
+            --bg-body: #0d0614;
+            --bg-surface: #1a0f26;
+            --bg-surface-alt: #29183d;
+            --bg-glass: rgba(26, 15, 38, 0.9);
+            --border-color: #4a2768;
+            --border-hover: #7e22ce;
+            --text-main: #fdf4ff;
+            --text-muted: #d8b4fe;
+            --text-light: #a855f7;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+            --card-shadow-hover: 0 20px 30px -10px rgba(236, 72, 153, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-bottom: 60px;
+        }
+
+        /* Top Notification / Sync Banner */
+        .sync-bar {
+            background: rgba(15, 23, 42, 0.95);
+            color: #e2e8f0;
+            padding: 6px 20px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-emerald);
+            display: inline-block;
+            box-shadow: 0 0 8px var(--accent-emerald);
+            animation: pulse-dot 2s infinite;
+        }
+
+        .status-dot.offline {
+            background-color: var(--accent-amber);
+            box-shadow: 0 0 8px var(--accent-amber);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.15); }
+        }
+
+        .sync-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-sync-refresh {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .btn-sync-refresh:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-sync-refresh.spinning i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hero Header */
+        .hero-header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 40px 20px 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-header::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, rgba(99, 102, 241, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
+            flex-shrink: 0;
+        }
+
+        .event-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 3px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fed7aa;
+            margin-bottom: 6px;
+        }
+
+        .app-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(24px, 4vw, 34px);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .app-subtitle {
+            font-size: 14px;
+            color: #cbd5e1;
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 9px 16px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-btn.active {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: -20px auto 0;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Search & Filter Control Center */
+        .search-panel {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 24px;
+            transition: var(--transition);
+        }
+
+        .search-bar-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            color: var(--text-muted);
+            font-size: 18px;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 50px 16px 50px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-surface);
+            color: var(--text-main);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        .search-input:focus + .search-icon {
+            color: var(--primary);
+        }
+
+        .clear-search-btn {
+            position: absolute;
+            right: 16px;
+            background: var(--bg-surface-alt);
+            color: var(--text-muted);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        .clear-search-btn:hover {
+            background: var(--accent-rose);
+            color: white;
+        }
+
+        /* Filter Controls Row */
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .custom-select {
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 9px 14px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .custom-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .btn-reset-filters {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px dashed var(--border-color);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-reset-filters:hover {
+            border-color: var(--accent-rose);
+            color: var(--accent-rose);
+            background: rgba(244, 63, 94, 0.08);
+        }
+
+        /* Judge Quick Selector Carousel / Pills */
+        .judge-quick-bar {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .judge-pills-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-light) transparent;
+        }
+
+        .judge-pills-container::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .judge-pills-container::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: var(--radius-full);
+        }
+
+        .judge-pill {
+            flex-shrink: 0;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .judge-pill:hover {
+            border-color: var(--primary);
+            background: var(--bg-surface-alt);
+            transform: translateY(-1px);
+        }
+
+        .judge-pill.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+        }
+
+        .judge-pill-count {
+            background: rgba(0, 0, 0, 0.12);
+            color: inherit;
+            padding: 1px 7px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .judge-pill.active .judge-pill-count {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        /* Stats Cards Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--stat-accent, var(--primary));
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--stat-bg, rgba(99, 102, 241, 0.12));
+            color: var(--stat-accent, var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+
+        .stat-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* View Mode Controls */
+        .view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .view-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .view-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .results-badge {
+            background: var(--bg-surface-alt);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid var(--border-color);
+        }
+
+        .view-switch-tabs {
+            display: flex;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            gap: 4px;
+        }
+
+        .view-tab-btn {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .view-tab-btn:hover {
+            color: var(--text-main);
+            background: var(--bg-surface-alt);
+        }
+
+        .view-tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Category Badges & Distinct Color Themes */
+        .cat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .cat-ula { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+        .cat-thaniya { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .cat-thanawiyya { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .cat-bidaya { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+        .cat-kulliyya { background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
+        .cat-general { background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1; }
+
+        [data-theme="dark"] .cat-ula { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; border-color: rgba(99, 102, 241, 0.4); }
+        [data-theme="dark"] .cat-thaniya { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border-color: rgba(245, 158, 11, 0.4); }
+        [data-theme="dark"] .cat-thanawiyya { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border-color: rgba(239, 68, 68, 0.4); }
+        [data-theme="dark"] .cat-bidaya { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.4); }
+        [data-theme="dark"] .cat-kulliyya { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; border-color: rgba(139, 92, 246, 0.4); }
+
+        /* Judge Session Section Cards */
+        .judge-section-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .judge-section-header {
+            padding: 16px 20px;
+            background: var(--bg-surface-alt);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .judge-identity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .judge-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
+        }
+
+        .judge-name-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .judge-duty-count {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .judge-actions-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action-sm {
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-action-sm:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        /* Program Schedule Cards Grid */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .program-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .program-card:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .card-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .time-badge {
+            background: var(--bg-surface-alt);
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .time-badge i {
+            color: var(--primary);
+        }
+
+        .program-code-badge {
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .program-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .program-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .meta-chip {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cojudges-section {
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            margin-top: auto;
+        }
+
+        .cojudges-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .cojudges-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .cojudge-chip {
+            background: var(--bg-surface-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 3px 9px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cojudge-chip:hover {
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        .cojudge-chip.is-current {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Modern Data Table View */
+        .table-responsive-wrapper {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 24px;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .modern-table th {
+            background: var(--bg-surface-alt);
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .modern-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .modern-table tbody tr:hover {
+            background: var(--bg-surface-alt);
+        }
+
+        .modern-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .clickable-judge-link {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .clickable-judge-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Printable A4 Sheets (Original Formal Layout Preserved & Enhanced) */
+        .a4-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .judge-sheet {
+            width: 210mm;
+            min-height: 290mm;
+            max-height: 296mm;
+            margin: 0 auto;
+            position: relative;
+            background-color: #ffffff;
+            color: #2c3e50;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+            padding: 8mm;
+            box-sizing: border-box;
+            border-radius: 8px;
+            page-break-inside: avoid;
+            page-break-before: always;
+        }
+
+        .sheet-inner-border {
+            border: 2px solid #2c3e50;
+            height: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sheet-header {
+            background: #2c3e50;
+            color: white;
+            padding: 16px 20px;
+            text-align: center;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .sheet-header-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .sheet-header-sub {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .sheet-judge-bar {
+            background-color: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sheet-judge-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .sheet-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 15px;
+        }
+
+        .sheet-table th {
+            background-color: #2c3e50;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 6px 8px;
+            text-align: left;
+            border: 1px solid #1a252f;
+        }
+
+        .sheet-table td {
+            padding: 8px 6px;
+            border: 1px solid #dee2e6;
+            color: #333;
+        }
+
+        .sheet-table tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        .sheet-instructions {
+            background-color: #f0fdf4;
+            border: 1px solid #86efac;
+            border-left: 4px solid #10b981;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #14532d;
+            margin-top: auto;
+        }
+
+        .sheet-instructions strong {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .sheet-footer {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--bg-surface);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.15);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading Skeleton Animation */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-surface-alt) 25%, var(--border-color) 50%, var(--bg-surface-alt) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Print Media Styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+            }
+
+            .sync-bar,
+            .hero-header,
+            .search-panel,
+            .stats-grid,
+            .view-header,
+            .programs-grid,
+            .table-responsive-wrapper,
+            .btn-action-sm,
+            .toast-container {
+                display: none !important;
+            }
+
+            .main-container {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .a4-container {
+                display: block !important;
+                margin: 0 !important;
+                gap: 0 !important;
+            }
+
+            .judge-sheet {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                width: 100% !important;
+                max-height: none !important;
+                min-height: 100vh !important;
+                margin: 0 !important;
+                padding: 10mm !important;
+                page-break-before: always !important;
+                page-break-inside: avoid !important;
+            }
+
+            .sheet-inner-border {
+                border: 2px solid #000 !important;
+            }
+
+            .sheet-header {
+                background: #000 !important;
+                color: #fff !important;
+            }
+
+            .sheet-table th {
+                background: #eee !important;
+                color: #000 !important;
+                border: 1px solid #000 !important;
+            }
+
+            .sheet-table td {
+                border: 1px solid #ccc !important;
+                color: #000 !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* Responsive Mobile Layout */
+        @media (max-width: 768px) {
+            .hero-header {
+                padding: 24px 16px 20px;
+            }
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .header-controls {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .search-panel {
+                padding: 14px;
+            }
+            .programs-grid {
+                grid-template-columns: 1fr;
+                padding: 14px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .judge-sheet {
+                width: 100%;
+                padding: 4mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Sync & Live Status Bar -->
+    <div class="sync-bar">
+        <div class="sync-status">
+            <span class="status-dot" id="syncDot"></span>
+            <span id="syncText">Connecting to Google Sheets...</span>
+        </div>
+        <div class="sync-actions">
+            <button class="btn-sync-refresh" id="btnRefreshData" onclick="refreshScheduleData()">
+                <i class="fa-solid fa-arrows-rotate"></i> <span>Sync</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="hero-header">
+        <div class="header-container">
+            <div class="brand-section">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-gavel"></i>
+                </div>
+                <div>
+                    <span class="event-badge">FANSAT 2025 • OFFICIAL PORTAL</span>
+                    <h1 class="app-title">Judge Duty Schedule</h1>
+                    <p class="app-subtitle">Search, view, and export personalized judging programs & time slots</p>
+                </div>
+            </div>
+
+            <div class="header-controls">
+                <button class="control-btn" id="btnThemeToggle" onclick="cycleTheme()" title="Switch Theme">
+                    <i class="fa-solid fa-palette"></i> <span id="themeLabel">Theme</span>
+                </button>
+                <button class="control-btn" onclick="printCurrentView()" title="Print Current View">
+                    <i class="fa-solid fa-print"></i> <span>Print</span>
+                </button>
+                <button class="control-btn" onclick="shareJudgeLink()" title="Share Schedule Link">
+                    <i class="fa-solid fa-share-nodes"></i> <span>Share</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="main-container">
+        
+        <!-- Search & Filter Control Center -->
+        <section class="search-panel">
+            <!-- Search Bar -->
+            <div class="search-bar-wrap">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" 
+                       id="globalSearchInput" 
+                       class="search-input" 
+                       placeholder="Search by Judge Name, Program, Code, Category, Venue, or Day (Press '/' to search)..." 
+                       autocomplete="off"
+                       oninput="handleSearchInput(this.value)">
+                <button class="clear-search-btn" id="btnClearSearch" onclick="clearSearch()" title="Clear search">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Filters Row -->
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <div class="filter-label"><i class="fa-solid fa-user-tie"></i> Judge:</div>
+                    <select id="judgeSelect" class="custom-select" onchange="onJudgeDropdownChange(this.value)">
+                        <option value="">All Judges (44)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label"><i class="fa-solid fa-tags"></i> Category:</div>
+                    <select id="categorySelect" class="custom-select" onchange="onCategoryFilterChange(this.value)">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label"><i class="fa-regular fa-calendar"></i> Day:</div>
+                    <select id="daySelect" class="custom-select" onchange="onDayFilterChange(this.value)">
+                        <option value="">All Days</option>
+                        <option value="THU">Thursday</option>
+                        <option value="FRI">Friday</option>
+                        <option value="SAT">Saturday</option>
+                        <option value="SUN">Sunday</option>
+                        <option value="MON">Monday</option>
+                        <option value="TUE">Tuesday</option>
+                    </select>
+                </div>
+
+                <button class="btn-reset-filters" onclick="resetAllFilters()">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Filters
+                </button>
+            </div>
+
+            <!-- Quick Judge Carousel Bar -->
+            <div class="judge-quick-bar">
+                <div class="judge-pills-container" id="judgePillsContainer">
+                    <!-- Dynamic Judge Pills Inserted Here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- KPI Dashboard Counters -->
+        <section class="stats-grid">
+            <div class="stat-card" style="--stat-accent: #6366f1; --stat-bg: rgba(99, 102, 241, 0.12);">
+                <div class="stat-icon"><i class="fa-solid fa-user-check"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statJudgesCount">0</div>
+                    <div class="stat-title">Active Judges</div>
+                </div>
+            </div>
+
+            <div class="stat-card" style="--stat-accent: #10b981; --stat-bg: rgba(16, 185, 129, 0.12);">
+                <div class="stat-icon"><i class="fa-solid fa-list-check"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statDutiesCount">0</div>
+                    <div class="stat-title">Total Program Duties</div>
+                </div>
+            </div>
+
+            <div class="stat-card" style="--stat-accent: #f59e0b; --stat-bg: rgba(245, 158, 11, 0.12);">
+                <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statCategoriesCount">0</div>
+                    <div class="stat-title">Categories</div>
+                </div>
+            </div>
+
+            <div class="stat-card" style="--stat-accent: #ec4899; --stat-bg: rgba(236, 72, 153, 0.12);">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="statDaysCount">6 Days</div>
+                    <div class="stat-title">Festival Days</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View Switcher & Title Header -->
+        <div class="view-header">
+            <div class="view-title-wrap">
+                <h2 class="view-title" id="currentViewHeading">Judge Schedules Overview</h2>
+                <span class="results-badge" id="resultsCountBadge">Loading...</span>
+            </div>
+
+            <div class="view-switch-tabs">
+                <button class="view-tab-btn active" id="tabCardView" onclick="switchView('card')">
+                    <i class="fa-solid fa-grip"></i> Cards View
+                </button>
+                <button class="view-tab-btn" id="tabTableView" onclick="switchView('table')">
+                    <i class="fa-solid fa-table-list"></i> Table View
+                </button>
+                <button class="view-tab-btn" id="tabPrintView" onclick="switchView('print')">
+                    <i class="fa-solid fa-file-invoice"></i> A4 Sheets
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Content Display Area -->
+        <div id="contentDisplayArea">
+            <!-- Populated via JavaScript dynamically -->
+        </div>
+
+    </main>
+
+    <!-- Toast Notifications Area -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        /**
+         * FANSAT Official Judge Duty Schedule Application
+         * Real-time Google Sheet GViz Integration with Offline Fallback & Multi-View Rendering
+         */
+
+        const SHEET_ID = "1ifPOFA53QRqpn_xQklctbWng0NJK_ws_qLcaF1w6mfY";
+        const SHEET_NAME = "JUDGE";
+        
+        // Application State
+        let allScheduleData = [];
+        let filteredScheduleData = [];
+        let uniqueJudges = [];
+        let uniqueCategories = [];
+        let currentViewMode = 'card'; // 'card', 'table', 'print'
+        let currentThemeIndex = 0;
+        const THEMES = ['light', 'dark', 'festive'];
+        
+        let filterState = {
+            searchQuery: '',
+            selectedJudge: '',
+            selectedCategory: '',
+            selectedDay: ''
+        };
+
+        // Fallback Dataset for instant offline loading and resiliency
+        const EMBEDDED_FALLBACK_DATA = [
+          {"judge": "ABBAS USD", "date": "13-Sep-2026", "day": "SUN", "start": "10:25 am", "end": "10:45 am", "code": "AUU27", "program": "CONVERSATION ARB", "category": "ULA URD", "venue": "Stage 1", "judge1": "ABBAS USD", "judge2": "", "judge3": ""},
+          {"judge": "ABBAS USD", "date": "15-Sep-2026", "day": "TUE", "start": "7:45 am", "end": "8:25 am", "code": "ATW15", "program": "FACE TO FACE ENG", "category": "THANAWIYYA", "venue": "Stage 2", "judge1": "SHAKOOR USD", "judge2": "ABBAS USD", "judge3": ""},
+          {"judge": "AFSAL K USD", "date": "10-Sep-2026", "day": "THU", "start": "8:25 am", "end": "9:10 am", "code": "ATM02", "program": "EXTEM JUNCTION SPEECH", "category": "THANIYA MLM", "venue": "Stage 3", "judge1": "ASLAM FARHAN USD", "judge2": "AFSAL K USD", "judge3": ""},
+          {"judge": "AFSAL K USD", "date": "10-Sep-2026", "day": "THU", "start": "3:00 pm", "end": "4:00 pm", "code": "AUM25", "program": "GEOGIANT", "category": "ULA MLM", "venue": "Stage 1", "judge1": "AFSAL K USD", "judge2": "", "judge3": ""},
+          {"judge": "AFSAL K USD", "date": "10-Sep-2026", "day": "THU", "start": "3:10 pm", "end": "3:40 pm", "code": "AUU26", "program": "GEOGIANT", "category": "ULA URD", "venue": "Stage 2", "judge1": "AFSAL K USD", "judge2": "", "judge3": ""},
+          {"judge": "AFSAL K USD", "date": "13-Sep-2026", "day": "SUN", "start": "2:30 pm", "end": "3:15 pm", "code": "ATM07", "program": "CHINTAWISHTANAYI KUTTI", "category": "THANIYA MLM", "venue": "Stage 1", "judge1": "AFSAL K USD", "judge2": "ASLAM SHA USD", "judge3": ""},
+          {"judge": "AFSAL N USD", "date": "11-Sep-2026", "day": "FRI", "start": "4:15 pm", "end": "4:45 pm", "code": "AUU25", "program": "PICTURE DICTIONARY", "category": "ULA URD", "venue": "Stage 4", "judge1": "AFSAL N USD", "judge2": "", "judge3": ""},
+          {"judge": "AFSAL P USD", "date": "12-Sep-2026", "day": "SAT", "start": "8:40 am", "end": "9:10 am", "code": "ATW17", "program": "PICTIONARY ENG", "category": "THANAWIYYA", "venue": "Stage 2", "judge1": "AFSAL P USD", "judge2": "", "judge3": ""},
+          {"judge": "ALI HYDER USD", "date": "10-Sep-2026", "day": "THU", "start": "7:45 am", "end": "8:25 am", "code": "ATM01", "program": "INTERVIEW", "category": "THANIYA MLM", "venue": "Stage 1", "judge1": "ALI HYDER USD", "judge2": "ASLAM SHA USD", "judge3": ""},
+          {"judge": "TAHIR SIR", "date": "11-Sep-2026", "day": "FRI", "start": "9:30 am", "end": "10:30 am", "code": "KUM01", "program": "ELOCUTION ENG", "category": "KULLIYYA URD", "venue": "Main Auditorium", "judge1": "TAHIR SIR", "judge2": "ABBAS USD", "judge3": ""},
+          {"judge": "SHAFEEQ USD CHELEMBRA", "date": "12-Sep-2026", "day": "SAT", "start": "10:00 am", "end": "11:00 am", "code": "BDU04", "program": "QAWWALI", "category": "BIDAYA URD", "venue": "Open Stage", "judge1": "SHAFEEQ USD CHELEMBRA", "judge2": "SAFVAN USD", "judge3": ""}
+        ];
+
+        // Format Date string
+        function formatSheetDate(val) {
+            if (!val) return '';
+            if (typeof val === 'string' && !val.startsWith('Date(')) return val;
+            
+            const match = String(val).match(/Date\((\d+),\s*(\d+),\s*(\d+)/);
+            if (match) {
+                const year = parseInt(match[1], 10);
+                const monthIdx = parseInt(match[2], 10);
+                const day = parseInt(match[3], 10);
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                return `${String(day).padStart(2, '0')}-${months[monthIdx] || 'Sep'}-${year}`;
+            }
+            return String(val);
+        }
+
+        // Format Time string
+        function formatSheetTime(cellVal, formattedVal) {
+            if (formattedVal && typeof formattedVal === 'string') return formattedVal;
+            if (!cellVal) return '';
+            if (typeof cellVal === 'string' && !cellVal.startsWith('Date(')) return cellVal;
+            
+            const match = String(cellVal).match(/Date\(\d+,\s*\d+,\s*\d+,\s*(\d+),\s*(\d+)/);
+            if (match) {
+                let hour = parseInt(match[1], 10);
+                let minute = parseInt(match[2], 10);
+                const ampm = hour >= 12 ? 'pm' : 'am';
+                hour = hour % 12;
+                hour = hour ? hour : 12; // 0 becomes 12
+                const minStr = String(minute).padStart(2, '0');
+                return `${hour}:${minStr} ${ampm}`;
+            }
+            return String(cellVal);
+        }
+
+        // Get Category Color Class
+        function getCategoryBadgeClass(category) {
+            const cat = (category || '').toUpperCase();
+            if (cat.includes('ULA')) return 'cat-ula';
+            if (cat.includes('THANIYA')) return 'cat-thaniya';
+            if (cat.includes('THANAWIYYA')) return 'cat-thanawiyya';
+            if (cat.includes('BIDAYA')) return 'cat-bidaya';
+            if (cat.includes('KULLIYYA')) return 'cat-kulliyya';
+            return 'cat-general';
+        }
+
+        // Google Visualization API Loader
+        function loadGvizSheet() {
+            return new Promise((resolve, reject) => {
+                const gvizUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&tqx=out:json`;
+                
+                window.google = window.google || {};
+                window.google.visualization = window.google.visualization || {};
+                window.google.visualization.Query = window.google.visualization.Query || {};
+                
+                const originalSetResponse = window.google.visualization.Query.setResponse;
+                const timeout = setTimeout(() => {
+                    reject(new Error("Google Sheets request timed out."));
+                }, 8000);
+
+                window.google.visualization.Query.setResponse = function (response) {
+                    clearTimeout(timeout);
+                    window.google.visualization.Query.setResponse = originalSetResponse || function () {};
+                    if (!response || !response.table) {
+                        reject(new Error("Invalid response from Google Sheets"));
+                        return;
+                    }
+                    resolve(response);
+                };
+
+                const script = document.createElement("script");
+                script.src = gvizUrl;
+                script.async = true;
+                script.onerror = () => {
+                    clearTimeout(timeout);
+                    reject(new Error("Failed to load script from Google Sheets"));
+                };
+                document.body.appendChild(script);
+            });
+        }
+
+        // Parse Response Table
+        function parseGoogleSheetResponse(response) {
+            const headers = (response.table.cols || []).map(c => (c.label || c.id || '').toLowerCase());
+            const rawRows = response.table.rows || [];
+            
+            const results = [];
+            rawRows.forEach(r => {
+                const cells = r.c || [];
+                const getVal = idx => (cells[idx] ? (cells[idx].v ?? '') : '');
+                const getFmt = idx => (cells[idx] ? (cells[idx].f ?? '') : '');
+
+                const judge = getVal(0);
+                if (!judge || String(judge).trim() === '') return;
+
+                const dateVal = getVal(1);
+                const dateFmt = getFmt(1);
+                const day = getVal(2);
+                const startVal = getVal(3);
+                const startFmt = getFmt(3);
+                const endVal = getVal(4);
+                const endFmt = getFmt(4);
+                const code = getVal(5);
+                const program = getVal(6);
+                const category = getVal(7);
+                const venue = getVal(9) || 'Campus Stage';
+                const judge1 = getVal(10);
+                const judge2 = getVal(11);
+                const judge3 = getVal(12);
+
+                results.push({
+                    judge: String(judge).trim(),
+                    date: dateFmt || formatSheetDate(dateVal),
+                    day: String(day).trim().toUpperCase(),
+                    start: formatSheetTime(startVal, startFmt),
+                    end: formatSheetTime(endVal, endFmt),
+                    code: String(code).trim(),
+                    program: String(program).trim(),
+                    category: String(category).trim(),
+                    venue: String(venue).trim(),
+                    judge1: String(judge1).trim(),
+                    judge2: String(judge2).trim(),
+                    judge3: String(judge3).trim()
+                });
+            });
+
+            return results;
+        }
+
+        // Initialize and Fetch Schedule Data
+        async function fetchScheduleData() {
+            const syncDot = document.getElementById('syncDot');
+            const syncText = document.getElementById('syncText');
+            const btnRefresh = document.getElementById('btnRefreshData');
+
+            btnRefresh.classList.add('spinning');
+            syncText.textContent = "Syncing live data from Google Sheets...";
+
+            try {
+                const response = await loadGvizSheet();
+                const parsed = parseGoogleSheetResponse(response);
+                
+                if (parsed.length > 0) {
+                    allScheduleData = parsed;
+                    syncDot.className = "status-dot";
+                    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    syncText.textContent = `● Live Google Sheet Sync (${allScheduleData.length} duties loaded at ${now})`;
+                    showToast(`Updated with ${allScheduleData.length} live records!`, 'success');
+                } else {
+                    throw new Error("No entries found in sheet.");
+                }
+            } catch (err) {
+                console.warn("Using offline fallback data:", err);
+                allScheduleData = EMBEDDED_FALLBACK_DATA;
+                syncDot.className = "status-dot offline";
+                syncText.textContent = `● Offline Mode: Cached Data Loaded (${allScheduleData.length} duties)`;
+                showToast("Loaded cached schedule data.", "info");
+            } finally {
+                btnRefresh.classList.remove('spinning');
+                processDataAndPopulateFilters();
+                applyFilters();
+            }
+        }
+
+        function refreshScheduleData() {
+            fetchScheduleData();
+        }
+
+        // Process Unique Judges & Categories for UI filters
+        function processDataAndPopulateFilters() {
+            const judgeMap = {};
+            const catSet = new Set();
+
+            allScheduleData.forEach(item => {
+                if (item.judge) {
+                    judgeMap[item.judge] = (judgeMap[item.judge] || 0) + 1;
+                }
+                if (item.category) {
+                    catSet.add(item.category);
+                }
+            });
+
+            uniqueJudges = Object.keys(judgeMap).sort();
+            uniqueCategories = Array.from(catSet).sort();
+
+            // Populate Judge Select Dropdown
+            const judgeSelect = document.getElementById('judgeSelect');
+            judgeSelect.innerHTML = `<option value="">All Judges (${uniqueJudges.length})</option>`;
+            uniqueJudges.forEach(judge => {
+                const count = judgeMap[judge];
+                const opt = document.createElement('option');
+                opt.value = judge;
+                opt.textContent = `${judge} (${count})`;
+                judgeSelect.appendChild(opt);
+            });
+
+            // Populate Category Select Dropdown
+            const categorySelect = document.getElementById('categorySelect');
+            categorySelect.innerHTML = `<option value="">All Categories (${uniqueCategories.length})</option>`;
+            uniqueCategories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                categorySelect.appendChild(opt);
+            });
+
+            // Populate Quick Judge Pills Bar
+            const pillsContainer = document.getElementById('judgePillsContainer');
+            pillsContainer.innerHTML = '';
+            
+            // "All" Pill
+            const allPill = document.createElement('button');
+            allPill.className = `judge-pill ${!filterState.selectedJudge ? 'active' : ''}`;
+            allPill.innerHTML = `<span>All Judges</span> <span class="judge-pill-count">${allScheduleData.length}</span>`;
+            allPill.onclick = () => selectJudge('');
+            pillsContainer.appendChild(allPill);
+
+            // Individual Judge Pills
+            uniqueJudges.forEach(judge => {
+                const count = judgeMap[judge];
+                const pill = document.createElement('button');
+                pill.className = `judge-pill ${filterState.selectedJudge === judge ? 'active' : ''}`;
+                pill.innerHTML = `<span>${judge}</span> <span class="judge-pill-count">${count}</span>`;
+                pill.onclick = () => selectJudge(judge);
+                pillsContainer.appendChild(pill);
+            });
+
+            // Update stats
+            document.getElementById('statJudgesCount').textContent = uniqueJudges.length;
+            document.getElementById('statDutiesCount').textContent = allScheduleData.length;
+            document.getElementById('statCategoriesCount').textContent = uniqueCategories.length;
+        }
+
+        // Apply Filters
+        function applyFilters() {
+            const query = filterState.searchQuery.toLowerCase().trim();
+            const selectedJudge = filterState.selectedJudge;
+            const selectedCategory = filterState.selectedCategory;
+            const selectedDay = filterState.selectedDay;
+
+            filteredScheduleData = allScheduleData.filter(item => {
+                // Judge filter
+                if (selectedJudge && item.judge !== selectedJudge) {
+                    return false;
+                }
+                // Category filter
+                if (selectedCategory && item.category !== selectedCategory) {
+                    return false;
+                }
+                // Day filter
+                if (selectedDay && item.day !== selectedDay) {
+                    return false;
+                }
+                // Search query match
+                if (query) {
+                    const matchText = [
+                        item.judge,
+                        item.program,
+                        item.code,
+                        item.category,
+                        item.venue,
+                        item.day,
+                        item.date,
+                        item.judge1,
+                        item.judge2,
+                        item.judge3
+                    ].join(' ').toLowerCase();
+
+                    if (!matchText.includes(query)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            updateUIState();
+            renderActiveView();
+        }
+
+        // Update UI State & Badges
+        function updateUIState() {
+            const totalDuties = filteredScheduleData.length;
+            const activeJudge = filterState.selectedJudge;
+            
+            // Badge text
+            const badge = document.getElementById('resultsCountBadge');
+            badge.textContent = `Showing ${totalDuties} ${totalDuties === 1 ? 'duty' : 'duties'}`;
+
+            // Heading
+            const heading = document.getElementById('currentViewHeading');
+            if (activeJudge) {
+                heading.innerHTML = `<i class="fa-solid fa-user-check" style="color:var(--primary);margin-right:8px;"></i> Schedule for <strong>${activeJudge}</strong>`;
+            } else if (filterState.searchQuery) {
+                heading.innerHTML = `<i class="fa-solid fa-magnifying-glass" style="color:var(--primary);margin-right:8px;"></i> Search: "<em>${escapeHTML(filterState.searchQuery)}</em>"`;
+            } else {
+                heading.textContent = "All Judges Duty Schedule";
+            }
+
+            // Sync Dropdown and Pills active state
+            document.getElementById('judgeSelect').value = activeJudge;
+            document.getElementById('categorySelect').value = filterState.selectedCategory;
+            document.getElementById('daySelect').value = filterState.selectedDay;
+
+            const pills = document.querySelectorAll('.judge-pill');
+            pills.forEach(p => {
+                const text = p.querySelector('span').textContent;
+                if ((!activeJudge && text === 'All Judges') || text === activeJudge) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+
+            const clearBtn = document.getElementById('btnClearSearch');
+            clearBtn.style.display = filterState.searchQuery ? 'flex' : 'none';
+        }
+
+        // Render Current View (Card / Table / Print Sheet)
+        function renderActiveView() {
+            const displayArea = document.getElementById('contentDisplayArea');
+            displayArea.innerHTML = '';
+
+            if (filteredScheduleData.length === 0) {
+                displayArea.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fa-regular fa-folder-open"></i></div>
+                        <h3 class="empty-title">No Program Schedules Found</h3>
+                        <p class="empty-desc">Try clearing your search query or selecting a different judge / category filter.</p>
+                        <button class="btn-reset-filters" onclick="resetAllFilters()">
+                            <i class="fa-solid fa-rotate-left"></i> Reset All Filters
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            if (currentViewMode === 'card') {
+                renderCardView(displayArea);
+            } else if (currentViewMode === 'table') {
+                renderTableView(displayArea);
+            } else if (currentViewMode === 'print') {
+                renderPrintSheetView(displayArea);
+            }
+        }
+
+        // 1. CARD VIEW: Grouped by Judge with Interactive Program Cards
+        function renderCardView(container) {
+            // Group by Judge
+            const grouped = {};
+            filteredScheduleData.forEach(item => {
+                if (!grouped[item.judge]) grouped[item.judge] = [];
+                grouped[item.judge].push(item);
+            });
+
+            Object.keys(grouped).sort().forEach(judgeName => {
+                const duties = grouped[judgeName];
+                const section = document.createElement('section');
+                section.className = 'judge-section-card';
+                section.id = `judge-card-${sanitizeId(judgeName)}`;
+
+                const initials = judgeName.split(' ').map(n => n[0]).slice(0, 2).join('');
+
+                section.innerHTML = `
+                    <div class="judge-section-header">
+                        <div class="judge-identity">
+                            <div class="judge-avatar">${initials}</div>
+                            <div>
+                                <h3 class="judge-name-title">${escapeHTML(judgeName)}</h3>
+                                <span class="judge-duty-count">${duties.length} Assigned ${duties.length === 1 ? 'Duty' : 'Duties'}</span>
+                            </div>
+                        </div>
+                        <div class="judge-actions-btn-group">
+                            <button class="btn-action-sm" onclick="filterBySingleJudge('${escapeParam(judgeName)}')">
+                                <i class="fa-solid fa-filter"></i> Isolate Judge
+                            </button>
+                            <button class="btn-action-sm" onclick="printSingleJudgeSheet('${escapeParam(judgeName)}')">
+                                <i class="fa-solid fa-print"></i> Print Sheet
+                            </button>
+                        </div>
+                    </div>
+                    <div class="programs-grid">
+                        ${duties.map(duty => renderSingleProgramCard(duty, judgeName)).join('')}
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+
+        function renderSingleProgramCard(duty, currentJudge) {
+            const catBadgeClass = getCategoryBadgeClass(duty.category);
+            const cojudges = [duty.judge1, duty.judge2, duty.judge3].filter(j => j && j.trim() !== '');
+
+            return `
+                <div class="program-card">
+                    <div>
+                        <div class="card-top-row">
+                            <span class="time-badge">
+                                <i class="fa-regular fa-clock"></i> ${duty.start || 'TBA'} - ${duty.end || 'TBA'}
+                            </span>
+                            <span class="program-code-badge">${escapeHTML(duty.code || 'CODE')}</span>
+                        </div>
+
+                        <h4 class="program-title">${escapeHTML(duty.program || 'Unnamed Program')}</h4>
+
+                        <div class="program-meta-row">
+                            <span class="cat-badge ${catBadgeClass}">
+                                <i class="fa-solid fa-tag"></i> ${escapeHTML(duty.category || 'General')}
+                            </span>
+                            <span class="meta-chip">
+                                <i class="fa-regular fa-calendar" style="color:var(--accent-teal);"></i> ${escapeHTML(duty.day)} (${escapeHTML(duty.date)})
+                            </span>
+                            ${duty.venue ? `
+                                <span class="meta-chip">
+                                    <i class="fa-solid fa-location-dot" style="color:var(--accent-rose);"></i> ${escapeHTML(duty.venue)}
+                                </span>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    ${cojudges.length > 0 ? `
+                        <div class="cojudges-section">
+                            <div class="cojudges-title">Judging Panel (${cojudges.length}):</div>
+                            <div class="cojudges-chips">
+                                ${cojudges.map(j => `
+                                    <button class="cojudge-chip ${j === currentJudge ? 'is-current' : ''}" 
+                                            onclick="selectJudge('${escapeParam(j)}')">
+                                        <i class="fa-solid fa-user-check"></i> ${escapeHTML(j)}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // 2. TABLE VIEW: Compact, Sortable & High Density
+        function renderTableView(container) {
+            const tableWrap = document.createElement('div');
+            tableWrap.className = 'table-responsive-wrapper';
+
+            let rowsHtml = filteredScheduleData.map((d, index) => {
+                const catClass = getCategoryBadgeClass(d.category);
+                return `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td>
+                            <a class="clickable-judge-link" onclick="selectJudge('${escapeParam(d.judge)}')">
+                                <i class="fa-solid fa-user-tie" style="margin-right:4px;"></i> ${escapeHTML(d.judge)}
+                            </a>
+                        </td>
+                        <td><span class="program-code-badge">${escapeHTML(d.code)}</span></td>
+                        <td><strong>${escapeHTML(d.program)}</strong></td>
+                        <td><span class="cat-badge ${catClass}">${escapeHTML(d.category)}</span></td>
+                        <td><i class="fa-regular fa-calendar"></i> ${escapeHTML(d.day)} (${escapeHTML(d.date)})</td>
+                        <td><i class="fa-regular fa-clock"></i> ${escapeHTML(d.start)} - ${escapeHTML(d.end)}</td>
+                        <td>${escapeHTML(d.venue || 'Campus Stage')}</td>
+                        <td>
+                            <span style="font-size:11px;color:var(--text-muted);">
+                                ${[d.judge1, d.judge2, d.judge3].filter(Boolean).join(', ')}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            tableWrap.innerHTML = `
+                <div style="overflow-x:auto;">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Judge</th>
+                                <th>Code</th>
+                                <th>Program</th>
+                                <th>Category</th>
+                                <th>Date & Day</th>
+                                <th>Time</th>
+                                <th>Venue</th>
+                                <th>Co-Judges</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.appendChild(tableWrap);
+        }
+
+        // 3. PRINT SHEET VIEW: Authentic Formal A4 Format for Individual or All Judges
+        function renderPrintSheetView(container) {
+            const a4Container = document.createElement('div');
+            a4Container.className = 'a4-container';
+
+            // Group by Judge
+            const grouped = {};
+            filteredScheduleData.forEach(item => {
+                if (!grouped[item.judge]) grouped[item.judge] = [];
+                grouped[item.judge].push(item);
+            });
+
+            Object.keys(grouped).sort().forEach(judgeName => {
+                const duties = grouped[judgeName];
+                const sheet = document.createElement('div');
+                sheet.className = 'judge-sheet';
+                sheet.id = `sheet-${sanitizeId(judgeName)}`;
+
+                const tableRows = duties.map(d => `
+                    <tr>
+                        <td>${escapeHTML(d.date)}</td>
+                        <td><strong>${escapeHTML(d.day)}</strong></td>
+                        <td>${escapeHTML(d.start)}</td>
+                        <td>${escapeHTML(d.end)}</td>
+                        <td><code>${escapeHTML(d.code)}</code></td>
+                        <td><strong>${escapeHTML(d.program)}</strong></td>
+                        <td>${escapeHTML(d.category)}</td>
+                        <td>${escapeHTML(d.venue || 'Campus Stage')}</td>
+                        <td>${escapeHTML(d.judge1 || '-')}</td>
+                        <td>${escapeHTML(d.judge2 || '-')}</td>
+                        <td>${escapeHTML(d.judge3 || '-')}</td>
+                    </tr>
+                `).join('');
+
+                sheet.innerHTML = `
+                    <div class="sheet-inner-border">
+                        <div>
+                            <div class="sheet-header">
+                                <div class="sheet-header-title">FANSAT 2025</div>
+                                <div class="sheet-header-sub">OFFICIAL JUDGING DUTY SCHEDULE & ASSIGNMENTS</div>
+                            </div>
+
+                            <div class="sheet-judge-bar">
+                                <div>
+                                    <span style="font-size:12px;text-transform:uppercase;color:#7f8c8d;display:block;">Assigned Judge</span>
+                                    <span class="sheet-judge-name"><i class="fa-solid fa-user-tie"></i> ${escapeHTML(judgeName)}</span>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span style="font-size:12px;color:#7f8c8d;">Total Programs:</span>
+                                    <span style="font-size:18px;font-weight:700;color:#2c3e50;">${duties.length}</span>
+                                </div>
+                            </div>
+
+                            <table class="sheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Day</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Code</th>
+                                        <th>Program Name</th>
+                                        <th>Category</th>
+                                        <th>Venue</th>
+                                        <th>Judge 1</th>
+                                        <th>Judge 2</th>
+                                        <th>Judge 3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRows}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <div class="sheet-instructions">
+                                <strong><i class="fa-solid fa-circle-info"></i> Instructions for Judges:</strong>
+                                • Please report to the designated venue at least 10 minutes prior to program start.<br>
+                                • Bring official judging criteria sheets, scoring rubric, and mobile device if online scoring is active.<br>
+                                • Maintain confidentiality of scores until officially verified by the tabulation desk.<br>
+                                • In case of timing conflicts, please notify the Arts Fest Control Room immediately.
+                            </div>
+
+                            <div class="sheet-footer">
+                                <span>Arts Festival Organizing Committee • Control Desk</span>
+                                <span>Official Schedule Generated: ${new Date().toLocaleDateString()}</span>
+                                <span>Page 1 of 1</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                a4Container.appendChild(sheet);
+            });
+
+            container.appendChild(a4Container);
+        }
+
+        // Filter Actions & Interaction Handlers
+        function handleSearchInput(val) {
+            filterState.searchQuery = val;
+            applyFilters();
+        }
+
+        function clearSearch() {
+            document.getElementById('globalSearchInput').value = '';
+            filterState.searchQuery = '';
+            applyFilters();
+            document.getElementById('globalSearchInput').focus();
+        }
+
+        function selectJudge(judgeName) {
+            filterState.selectedJudge = judgeName;
+            // Update URL hash for easy sharing
+            if (judgeName) {
+                window.location.hash = `judge=${encodeURIComponent(judgeName)}`;
+            } else {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+            applyFilters();
+            window.scrollTo({ top: 220, behavior: 'smooth' });
+        }
+
+        function filterBySingleJudge(judgeName) {
+            selectJudge(judgeName);
+        }
+
+        function onJudgeDropdownChange(val) {
+            selectJudge(val);
+        }
+
+        function onCategoryFilterChange(val) {
+            filterState.selectedCategory = val;
+            applyFilters();
+        }
+
+        function onDayFilterChange(val) {
+            filterState.selectedDay = val;
+            applyFilters();
+        }
+
+        function resetAllFilters() {
+            filterState.searchQuery = '';
+            filterState.selectedJudge = '';
+            filterState.selectedCategory = '';
+            filterState.selectedDay = '';
+            document.getElementById('globalSearchInput').value = '';
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+            applyFilters();
+            showToast("All filters reset", "info");
+        }
+
+        // View Switching
+        function switchView(mode) {
+            currentViewMode = mode;
+            document.querySelectorAll('.view-tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if (mode === 'card') document.getElementById('tabCardView').classList.add('active');
+            if (mode === 'table') document.getElementById('tabTableView').classList.add('active');
+            if (mode === 'print') document.getElementById('tabPrintView').classList.add('active');
+
+            renderActiveView();
+        }
+
+        // Theme Toggle
+        function cycleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % THEMES.length;
+            const newTheme = THEMES[currentThemeIndex];
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('fansat_theme', newTheme);
+            
+            const themeLabel = document.getElementById('themeLabel');
+            themeLabel.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+            showToast(`Theme switched to ${newTheme}`, "info");
+        }
+
+        // Single Judge Printing
+        function printSingleJudgeSheet(judgeName) {
+            // Select judge first
+            selectJudge(judgeName);
+            // Switch to print view
+            switchView('print');
+            setTimeout(() => {
+                window.print();
+            }, 300);
+        }
+
+        function printCurrentView() {
+            if (currentViewMode !== 'print') {
+                switchView('print');
+                setTimeout(() => {
+                    window.print();
+                }, 300);
+            } else {
+                window.print();
+            }
+        }
+
+        // Share Link functionality
+        function shareJudgeLink() {
+            const url = window.location.href;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast("Schedule link copied to clipboard! Share on WhatsApp.", "success");
+                }).catch(() => {
+                    prompt("Copy your schedule link:", url);
+                });
+            } else {
+                prompt("Copy your schedule link:", url);
+            }
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            let icon = '<i class="fa-solid fa-circle-check" style="color:#10b981;"></i>';
+            if (type === 'warn') icon = '<i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i>';
+            if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark" style="color:#f43f5e;"></i>';
+
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+
+        // Utility Helpers
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function escapeParam(str) {
+            if (!str) return '';
+            return String(str).replace(/'/g, "\\'");
+        }
+
+        function sanitizeId(str) {
+            return String(str).replace(/[^a-zA-Z0-9_-]/g, '_');
+        }
+
+        // Handle URL Hash on load (e.g., #judge=TAHIR%20SIR)
+        function checkUrlHash() {
+            if (window.location.hash) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const judgeParam = params.get('judge');
+                if (judgeParam) {
+                    filterState.selectedJudge = decodeURIComponent(judgeParam);
+                }
+            }
+        }
+
+        // Global Keyboard Shortcut ('/' to focus search)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'SELECT') {
+                e.preventDefault();
+                const searchInput = document.getElementById('globalSearchInput');
+                searchInput.focus();
+                searchInput.select();
+            }
+        });
+
+        // Initialize Theme from Local Storage
+        const savedTheme = localStorage.getItem('fansat_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        currentThemeIndex = THEMES.indexOf(savedTheme);
+        if (currentThemeIndex === -1) currentThemeIndex = 0;
+        document.getElementById('themeLabel').textContent = savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1);
+
+        // Application Boot
+        document.addEventListener('DOMContentLoaded', () => {
+            checkUrlHash();
+            fetchScheduleData();
+        });
+
+    </script>
+</body>
+</html>
